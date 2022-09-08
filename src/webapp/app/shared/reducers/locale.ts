@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import { createSlice } from '@reduxjs/toolkit';
 
 import { AppThunk } from 'app/config/store';
+import TranslatorContext from 'app/config/TranslatorContext';
 
 const initialState = {
   currentLocale: '',
@@ -13,12 +14,13 @@ const initialState = {
 
 export type LocaleState = Readonly<typeof initialState>;
 
-// export const loadLocale = async (locale: string, prefix: string) => {
-//   if (prefix || !Object.keys(TranslatorContext.context.translations).includes(locale)) {
-//     const response = await axios.get(`${prefix}i18n/${locale}.json?_=${I18N_HASH}`, { baseURL: '' });
-//     TranslatorContext.registerTranslations(locale, response.data);
-//   }
-// };
+export const loadLocale = async (locale: string, prefix: string) => {
+  if (prefix || !Object.keys(TranslatorContext.context.translations).includes(locale)) {
+    const response = await axios.get(`${prefix}i18n/${locale}.json?_=${I18N_HASH}`, { baseURL: '' });
+    TranslatorContext.registerTranslations(locale, response.data);
+    console.log(TranslatorContext.context.translations);
+  }
+};
 
 export const setLocale: (locale: string) => AppThunk = locale => dispatch => {
   dispatch(updateLocale(locale));
@@ -32,12 +34,12 @@ export const LocaleSlice = createSlice({
       const currentLocale = action.payload;
       if (state.currentLocale !== currentLocale) {
         dayjs.locale(currentLocale);
-        // TranslatorContext.setLocale(currentLocale);
+        TranslatorContext.setLocale(currentLocale);
       }
       state.currentLocale = currentLocale;
     },
     loaded(state, action) {
-    //   state.lastChange = TranslatorContext.context.lastChange;
+      state.lastChange = TranslatorContext.context.lastChange;
       state.loadedKeys = state.loadedKeys.concat(action.payload);
     },
     addTranslationSourcePrefix(state, action) {
@@ -51,5 +53,4 @@ export const LocaleSlice = createSlice({
 
 export const { updateLocale, addTranslationSourcePrefix, loaded } = LocaleSlice.actions;
 
-// Reducer
 export default LocaleSlice.reducer;

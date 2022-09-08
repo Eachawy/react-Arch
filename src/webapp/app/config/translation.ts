@@ -1,7 +1,8 @@
-import { setLocale } from 'app/shared/reducers/locale';
+import { loadLocale, setLocale } from 'app/shared/reducers/locale';
+import TranslatorContext from './TranslatorContext';
 
-// TranslatorContext.setDefaultLocale('en');
-// TranslatorContext.setRenderInnerTextForMissingKeys(false);
+TranslatorContext.setDefaultLocale('en');
+TranslatorContext.setRenderInnerTextForMissingKeys(false);
 
 export const languages: any = {
   ar: { name: 'العربية', rtl: true },

@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { serializeAxiosError } from './reducer.utils';
 import { AppThunk } from 'app/config/store';
+import { setLocale } from './locale';
 
 const AUTH_TOKEN_KEY = 'authToken';
 
@@ -27,7 +28,7 @@ export const getSession = (): AppThunk => async (dispatch, getState) => {
     const { account } = getState().authentication;
     if (account && account.langKey) {
         const langKey = sessionStorage.getItem('locale');
-        // dispatch(setLocale(langKey['langKey']));
+        dispatch(setLocale(langKey['langKey']));
     }
 };
 
