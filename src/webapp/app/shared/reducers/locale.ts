@@ -18,7 +18,6 @@ export const loadLocale = async (locale: string, prefix: string) => {
   if (prefix || !Object.keys(TranslatorContext.context.translations).includes(locale)) {
     const response = await axios.get(`${prefix}i18n/${locale}.json?_=${I18N_HASH}`, { baseURL: '' });
     TranslatorContext.registerTranslations(locale, response.data);
-    console.log(TranslatorContext.context.translations);
   }
 };
 
