@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const webpackMerge = require('webpack-merge').merge;
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin');
-// const WebpackNotifierPlugin = require('webpack-notifier');
+const WebpackNotifierPlugin = require('webpack-notifier');
 const path = require('path');
 const sass = require('sass');
 const postcssRTLCSS = require('postcss-rtlcss');
@@ -18,7 +18,7 @@ module.exports = async options =>
     mode: ENV,
     entry: ['./src/webapp/app/index'],
     output: {
-      path: utils.root('target/static/app/'),
+      path: utils.root('build/static/'),
       filename: '[name].[contenthash:8].js',
       chunkFilename: '[name].[chunkhash:8].chunk.js',
     },
@@ -51,9 +51,9 @@ module.exports = async options =>
     devServer: {
       hot: true,
       static: {
-        directory: './target/static/app/',
+        directory: './build/static/',
       },
-      port: 9060,
+      port: 2060,
       proxy: [
         {
           context: ['/api', '/services', '/management', '/v3/api-docs', '/h2-console', '/auth'],
@@ -70,15 +70,15 @@ module.exports = async options =>
       process.env.JHI_DISABLE_WEBPACK_LOGS
         ? null
         : new SimpleProgressWebpackPlugin({
-            format: options.stats === 'minimal' ? 'compact' : 'expanded',
-          }),
+          format: options.stats === 'minimal' ? 'compact' : 'expanded',
+        }),
       new BrowserSyncPlugin(
         {
           https: options.tls,
           host: 'localhost',
-          port: 9000,
+          port: 2000,
           proxy: {
-            target: `http${options.tls ? 's' : ''}://localhost:${options.watch ? '8080' : '9060'}`,
+            target: `http${options.tls ? 's' : ''}://localhost:${options.watch ? '8080' : '2060'}`,
             ws: true,
             proxyOptions: {
               changeOrigin: false, //pass the Host header to the backend unchanged  https://github.com/Browsersync/browser-sync/issues/430
@@ -89,14 +89,21 @@ module.exports = async options =>
               heartbeatTimeout: 60000,
             },
           },
+          /*
+      ,ghostMode: { // uncomment this part to disable BrowserSync ghostMode; https://github.com/jhipster/generator-jhipster/issues/11116
+        clicks: false,
+        location: false,
+        forms: false,
+        scroll: false
+      } */
         },
         {
           reload: false,
         }
       ),
-    //   new WebpackNotifierPlugin({
-    //     title: 'Testcase',
-    //     contentImage: path.join(__dirname, 'logo.png'),
-    //   }),
+      // new WebpackNotifierPlugin({
+      //   title: 'EMSDX',
+      //   contentImage: path.join(__dirname, 'logo-jhipster.png'),
+      // }),
     ].filter(Boolean),
   });

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run webapp:dev --",
-    "clean-app": "rimraf target/static/app/{src,target/}",
+    "clean-app": "rimraf build/static/app/{src,build/}",
     "webapp:build": "npm run clean-app && npm run webapp:build:dev --",
     "webapp:build:dev": "webpack --config webpack/webpack.dev.js --env stats=minimal",
     "webapp:dev": "npm run webpack-dev-server -- --config webpack/webpack.dev.js --env stats=minimal",
@@ -62,6 +62,9 @@
     "typescript": "^4.9.5",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^4.10.1"
+    "webpack-dev-server": "^4.10.1",
+    "webpack-merge": "5.8.0",
+    "webpack-notifier": "1.15.0",
+    "workbox-webpack-plugin": "6.5.4"
   }
 }
