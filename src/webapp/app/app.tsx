@@ -1,3 +1,4 @@
+import 'react-toastify/dist/ReactToastify.css';
 import '../content/app.scss';
 import 'app/config/dayjs.ts';
 
@@ -6,12 +7,15 @@ import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import ErrorBoundary from './shared/error/error-boundary';
 import AppRoutes from './routes';
+import Header from './shared/layout/header/header';
+import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 
 const baseHref = document.querySelector('base').getAttribute('href').replace(/\/$/, '');
 
 export const App = () => {
 
+  const currentLocale = useAppSelector(state => state.locale.currentLocale);
 
   useEffect(() => { }, []);
 
@@ -20,16 +24,11 @@ export const App = () => {
       <div className="app-container">
         <ToastContainer position={toast.POSITION.TOP_LEFT} className="toastify-container" toastClassName="toastify-toast" />
         <ErrorBoundary>
-          {/* <Header
-            isAuthenticated={isAuthenticated}
-            isAdmin={isAdmin}
+          <Header
             currentLocale={currentLocale}
-            ribbonEnv={ribbonEnv}
-            isInProduction={isInProduction}
-            isOpenAPIEnabled={isOpenAPIEnabled}
-          /> */}
+          />
         </ErrorBoundary>
-        <div className="container-fluid view-container" id="app-view-container">
+        <div>
           <ErrorBoundary>
             <AppRoutes />
           </ErrorBoundary>
