@@ -76,7 +76,6 @@ module.exports = async options => {
           },
           /*
        ,
-       Disabled due to https://github.com/jhipster/generator-jhipster/issues/16116
        Can be enabled with @reduxjs/toolkit@>1.6.1
       {
         enforce: 'pre',
@@ -91,7 +90,6 @@ module.exports = async options => {
       },
       plugins: [
         new webpack.EnvironmentPlugin({
-          // react-jhipster requires LOG_LEVEL config.
           LOG_LEVEL: development ? 'info' : 'error',
         }),
         new webpack.DefinePlugin({
